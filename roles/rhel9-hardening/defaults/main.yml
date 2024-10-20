@@ -1,4 +1,7 @@
 ---
+pass_exp_excluded_users:
+  - root
+
 rhel9cis_pam_pwquality:
     minlen: 8
 
@@ -42,7 +45,7 @@ rhel9cis_pam_password:
 
 rhel9cis_pass:
     max_days: 365
-    min_days: 7
+    min_days: 1
     warn_age: 7
 
 rhel9cis_force_user_maxdays: false
