@@ -1,6 +1,6 @@
 ---
 - name: rhel 9 hardening
-  hosts: redhat9
+  hosts: all
   gather_facts: true
   vars:
     lock_user_list: ''
