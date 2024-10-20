@@ -1,6 +1,6 @@
 ---
 - name: rhel 9 hardening
-  hosts: all
+  hosts: all 
   gather_facts: true
   vars:
     lock_user_list: ''
@@ -11,7 +11,7 @@
 
   tasks:
     - name: "Discover interactive users"
-      ansible.builtin.shell: "getent passwd | awk -F: '($3 >= 1000 && $3 <= 60000){print $1}'"
+      ansible.builtin.shell: "getent passwd | awk -F: '($3 >= 1000){print $1}'"
       register: users
 
     - name: print the interactive users
@@ -19,23 +19,19 @@
         var: users.stdout_lines
 
     - name: Unset password expiration for root user
-      shell: "chage --maxdays 99999 {{ item }}"
+      ansible.builtin.shell: "chage --maxdays 99999 {{ item }}"
       changed_when: false
       loop: "{{ pass_exp_excluded_users }}"
 
-    - name: "Force user to change password at first login"
-      ansible.builtin.user:
-        name: "{{ item }}"
-        password_expire_min: 1  # Forces password change at first login
+    - name: "Force user to change password first login"
+      ansible.builtin.shell: "chage -d0 {{ item }}"
       loop: "{{ users.stdout_lines }}"
-      loop_control:
-        label: "{{ item }}"
       when:
         - item != "ansible"
         - item != "nobody"
-        - changed_all_user | bool == true | bool
+        - changed_all_user|bool  == true|bool
 
     - name: "Multi User | Force user to change password first login"
-      shell: "chage -d0 {{ item }}"
+      ansible.builtin.shell: "chage -d0 {{ item }}"
       loop: "{{ lock_user_list.split('\n') }}"
       when: lock_user_list != ''
