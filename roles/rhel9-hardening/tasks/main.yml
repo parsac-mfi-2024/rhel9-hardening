@@ -1,0 +1,33 @@
+---
+- import_tasks: preflight.yml
+
+- name: Gather the package facts
+  package_facts:
+      manager: auto
+
+- import_tasks: parse_etc_password.yml
+  become: true
+
+- import_tasks: 2.1.x.yml
+  become: true
+
+- import_tasks: 2.2.x.yml
+  become: true
+
+- import_tasks: 5.2.20.yml
+  become: true
+
+- import_tasks: 5.3.3.2.2.yml
+  become: true
+
+- import_tasks: 5.4.x.yml
+  become: true
+
+- import_tasks: 5.5.x.yml
+  become: true
+
+- import_tasks: 5.6.1.x.yml
+  become: true
+
+- import_tasks: 5.6.x.yml
+  become: true

@@ -1,0 +1,72 @@
+---
+rhel9cis_pam_pwquality:
+    minlen: 8
+
+#############################################################
+rhel9cis_time_synchronization_servers:
+    - 0.pool.ntp.org
+    - 1.pool.ntp.org
+    - 2.pool.ntp.org
+    - 3.pool.ntp.org
+
+rhel9cis_chrony_server_options: "minpoll 8"
+
+rhel9cis_chrony_server_rtcsync: false
+
+rhel9cis_chrony_server_makestep: "1.0 3"
+
+rhel9cis_chrony_server_minsources: 2
+
+###############################################################
+
+rhel9cis_sshd_config_file: /etc/ssh/sshd_config
+
+rhel9cis_sshd:
+    clientalivecountmax: 3
+    clientaliveinterval: 15
+
+##############################################################
+
+rhel9cis_authselect:
+    custom_profile_name: custom-profile
+    default_file_to_copy: "sssd --symlink-meta"
+    options: with-sudo with-faillock without-nullok
+
+rhel9cis_authselect_custom_profile_create: false
+
+rhel9cis_authselect_custom_profile_select: false
+
+rhel9cis_pam_password:
+    minlen: 14
+    minclass: 4
+
+rhel9cis_pass:
+    max_days: 365
+    min_days: 7
+    warn_age: 7
+
+rhel9cis_force_user_maxdays: false
+
+rhel9cis_force_user_mindays: false
+
+rhel9cis_force_user_warnage: false
+
+rhel9cis_futurepwchgdate_autofix: true
+
+rhel9cis_pam_faillock:
+
+   unlock_time: 900
+   deny: 5
+   remember: 5
+
+rhel9cis_add_faillock_without_authselect: false
+
+rhel9cis_inactivelock:
+
+  lock_days: 30
+
+min_int_uid: 1000
+
+max_int_uid: 65533
+
+#############################################################

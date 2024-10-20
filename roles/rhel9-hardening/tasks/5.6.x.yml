@@ -1,0 +1,40 @@
+---
+- name: "5.6.2 | PATCH | Ensure system accounts are secured"
+  block:
+      - name: "5.6.2 | PATCH | Ensure system accounts are secured | Set nologin"
+        ansible.builtin.user:
+            name: "{{ item.id }}"
+            shell: /usr/sbin/nologin
+        loop: "{{ rhel9cis_passwd }}"
+        when:
+            - item.id != "root"
+            - item.id != "sync"
+            - item.id != "shutdown"
+            - item.id != "halt"
+            - item.id != "nfsnobody"
+            - item.uid < min_int_uid | int
+            - item.shell != "/bin/false"
+            - item.shell != "/usr/sbin/nologin"
+            - item.shell != "/sbin/nologin"
+            - item.shell != "/dev/null"
+        loop_control:
+            label: "{{ item.id }}"
+
+      - name: "5.6.2 | PATCH | Ensure system accounts are secured | Lock accounts"
+        ansible.builtin.user:
+            name: "{{ item.id }}"
+            password_lock: true
+        loop: "{{ rhel9cis_passwd }}"
+        when:
+            - item.id != "halt"
+            - item.id != "shutdown"
+            - item.id != "sync"
+            - item.id != "root"
+            - item.id != "nfsnobody"
+            - item.uid < min_int_uid | int
+            - item.shell != "/bin/false"
+            - item.shell != "/usr/sbin/nologin"
+            - item.shell != "/sbin/nologin"
+            - item.shell != "/dev/null"
+        loop_control:
+            label: "{{ item.id }}"

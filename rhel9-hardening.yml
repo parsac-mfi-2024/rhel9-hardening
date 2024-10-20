@@ -1,0 +1,6 @@
+---
+- name: rhel 9 hardening
+  hosts: redhat9
+  gather_facts: true
+  roles:
+    - role: rhel9-hardening

@@ -1,0 +1,7 @@
+---
+- name: "5.3.3.2.2 | PATCH | Ensure password length is configured | pwquality.confi"
+  ansible.builtin.lineinfile:
+      path: /etc/security/pwquality.conf
+      state: present
+      regexp: '^(#|)\s*minlen\s*=\s*\d'
+      line: "minlen = {{ rhel9cis_pam_pwquality['minlen'] }}"

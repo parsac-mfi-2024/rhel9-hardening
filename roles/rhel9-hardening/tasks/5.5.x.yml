@@ -1,0 +1,29 @@
+---
+- name: "5.5.2 | PATCH | Ensure system accounts are secured"
+  lineinfile:
+    path: /etc/security/faillock.conf
+    state: present
+    line: "{{ item }}"
+  loop:
+      - 'deny = 3'
+      - 'unlock_time = 600'
+      - silent
+  register: rhel9cis_5_5_2_profiles_shell_output
+
+#- name: "Save the current configuration"
+#  shell: authselect apply-changes
+#  when: rhel9cis_5_5_2_profiles_shell_output.changed == true
+
+- name: "5.5.3 | PATCH | Ensure password reuse is limited | pwquality"
+  block:
+      - name: "5.5.3 | PATCH | Ensure password reuse is limited | Set system-auth remember Settings"
+        ansible.builtin.lineinfile:
+            path: /etc/pam.d/system-auth
+            line: "password    requisite     pam_pwhistory.so try_first_pass enforce_for_root retry=3 remember={{ rhel9cis_pam_faillock.remember }}"
+            insertafter: '^password\s*requisite\s*pam_pwquality.so'
+
+      - name: "5.5.3 | PATCH | Ensure password reuse is limited | Set password-auth remember Settings"
+        ansible.builtin.lineinfile:
+            path: /etc/pam.d/password-auth
+            line: "password    requisite     pam_pwhistory.so try_first_pass enforce_for_root retry=3 remember={{ rhel9cis_pam_faillock.remember }}"
+            insertafter: '^password\s*requisite\s*pam_pwquality.so'
