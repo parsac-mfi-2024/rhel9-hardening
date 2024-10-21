@@ -1,4 +1,9 @@
-- name: "7.4.1 | PATCH | Ensure custom authselect profile is used"
+---
+#- name: Disable command warnings
+#  set_fact:
+#    ANSIBLE_COMMAND_WARNINGS: False
+
+- name: "5.4.1 | PATCH | Ensure custom authselect profile is used"
   block:
       - name: "5.4.1 | AUDIT | Ensure custom authselect profile is used | Gather profiles"
         shell: 'authselect current | grep "Profile ID: custom/"'
@@ -23,9 +28,9 @@
         #args:
         #    warn: no
         register: rhel9cis_5_4_1_profiles_shell_output
-        #failed_when:
+        #failed_when: 
         when: rhel9cis_5_4_1_profiles.stdout == '' and not custom_profile_exists.stat.exists
-
+      
 
 - name: "5.4.2 | PATCH | Ensure authselect includes with-faillock"
   block:
@@ -48,6 +53,7 @@
         #    warn: no
         register: rhel9cis_5_4_2_profiles_shell_output
         when: "'- with-faillock' not in rhel9cis_5_4_2_profiles_faillock.stdout_lines"
+
 - name: "5.5.2 | PATCH | Ensure system accounts are secured"
   lineinfile:
     path: /etc/security/faillock.conf
