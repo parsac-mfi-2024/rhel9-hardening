@@ -31,7 +31,7 @@ rhel9cis_sshd:
 ##############################################################
 
 rhel9cis_authselect:
-    custom_profile_name: custom-profile
+    custom_profile_name: ansible-prasac-policy
     default_file_to_copy: "sssd --symlink-meta"
     options: with-sudo with-faillock without-nullok
 
