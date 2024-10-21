@@ -55,14 +55,15 @@
         when: "'- with-faillock' not in rhel9cis_5_4_2_profiles_faillock.stdout_lines"
 
 - name: "5.5.2 | PATCH | Ensure system accounts are secured"
-  lineinfile:
+  ansible.builtin.lineinfile:
     path: /etc/security/faillock.conf
-    state: present
-    line: "{{ item }}"
+    regexp: "{{ item.regexp }}"
+    line: "{{ item.line }}"
+    create: true
   loop:
-      - 'deny = {{ rhel9cis_pam_faillock.deny }}'
-      - 'unlock_time = {{ rhel9cis_pam_faillock.unlock_time }}'
-      - silent
+    - { regexp: '^deny', line: 'deny = {{ rhel9cis_pam_faillock.deny }}' }
+    - { regexp: '^unlock_time', line: 'unlock_time = {{ rhel9cis_pam_faillock.unlock_time }}' }
+    - { regexp: '^silent', line: silent }
   register: rhel9cis_5_5_2_profiles_shell_output
 
 - name: "5.5.3 | PATCH | Ensure password reuse is limited | pwhistory"
