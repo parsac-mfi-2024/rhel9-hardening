@@ -1,12 +1,20 @@
 ---
 - name: rhel 9 hardening
-  hosts: all 
+  hosts: all
   gather_facts: true
   vars:
     lock_user_list: ''
     #changed_all_user: true
   
   roles:
+    - role: rhel-system-roles.timesync
+      vars:
+        timesync_ntp_provider: chrony
+        timesync_ntp_servers:
+          - hostname: server 0.asia.pool.ntp.org
+            iburst: yes
+          - hostname: server 1.asia.pool.ntp.org
+            iburst: yes
     - role: rhel9-hardening
 
   tasks:
