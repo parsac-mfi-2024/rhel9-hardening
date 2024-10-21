@@ -60,8 +60,8 @@
     state: present
     line: "{{ item }}"
   loop:
-      - 'deny = 3'
-      - 'unlock_time = 600'
+      - 'deny = {{ rhel9cis_pam_faillock.deny }}'
+      - 'unlock_time = {{ rhel9cis_pam_faillock.unlock_time }}'
       - silent
   register: rhel9cis_5_5_2_profiles_shell_output
 
