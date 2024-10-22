@@ -7,6 +7,14 @@ rhel9cis_pam_pwquality:
 
 ###############################################################
 
+rhel9cis_time_synchronization_servers:
+    - 0.pool.ntp.org
+    - 1.pool.ntp.org
+    - 2.pool.ntp.org
+    - 3.pool.ntp.org
+
+###############################################################
+
 rhel9cis_sshd_config_file: /etc/ssh/sshd_config
 
 rhel9cis_sshd:
