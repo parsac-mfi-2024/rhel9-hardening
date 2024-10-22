@@ -5,21 +5,6 @@ pass_exp_excluded_users:
 rhel9cis_pam_pwquality:
     minlen: 8
 
-#############################################################
-rhel9cis_time_synchronization_servers:
-    - 0.pool.ntp.org
-    - 1.pool.ntp.org
-    - 2.pool.ntp.org
-    - 3.pool.ntp.org
-
-rhel9cis_chrony_server_options: "minpoll 8"
-
-rhel9cis_chrony_server_rtcsync: false
-
-rhel9cis_chrony_server_makestep: "1.0 3"
-
-rhel9cis_chrony_server_minsources: 2
-
 ###############################################################
 
 rhel9cis_sshd_config_file: /etc/ssh/sshd_config
