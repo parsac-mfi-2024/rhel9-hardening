@@ -58,7 +58,7 @@ rhel9cis_futurepwchgdate_autofix: true
 
 rhel9cis_pam_faillock:
 
-   unlock_time: 900
+   unlock_time: 90
    deny: 5
    remember: 5
 
