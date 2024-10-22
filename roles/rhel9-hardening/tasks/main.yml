@@ -23,9 +23,6 @@
 - import_tasks: 5.4.x.yml
   become: true
 
-- import_tasks: 5.5.x.yml
-  become: true
-
 - import_tasks: 5.6.1.x.yml
   become: true
 
